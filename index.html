@@ -38,12 +38,10 @@
 
   }
 
-  #countdown {
-    font-size: 2em;
-    color: red;
-    margin-top: 20px;
-    text-align: center;
-  }
+ #timer {
+  font-size: 2em;
+  color: #333;
+}
 
 .profile-card {
   border: 1px solid #ccc;
@@ -153,7 +151,7 @@
     <p class="profile-title">tickling your taste bud</p>
     <p class="profile-description">Please we need your vote!</p>
     
-    <div id="countdown">00:00:00</div>
+  <div id="timer">00:00</div>
  <div class="social-links">
 
     <div class="social-vote-button">
@@ -321,41 +319,49 @@
       }
     </script>
 
-      <script>
-    // Countdown Timer Script
-    function startCountdown(duration, display) {
-      let timer = duration, hours, minutes, seconds;
-      setInterval(function () {
-        hours = Math.floor((timer / 3600) % 24);
-        minutes = Math.floor((timer % 3600) / 60);
-        seconds = Math.floor(timer % 60);
+<script>
+    // Initialize the countdown duration (in seconds)
+    const countdownDuration = 600; // 10 minutes (600 seconds)
 
-        // Pad the values to always show two digits
-        hours = hours < 10 ? "0" + hours : hours;
+    // Function to start or resume the timer
+    function startTimer(duration, display) {
+      let timer = duration, minutes, seconds;
+      
+      // Save the end time in localStorage
+      const endTime = localStorage.getItem('endTime');
+      if (endTime) {
+        const remainingTime = Math.max(Math.floor((new Date(endTime) - new Date()) / 1000), 0);
+        if (remainingTime > 0) {
+          timer = remainingTime;
+        }
+      } else {
+        const newEndTime = new Date(new Date().getTime() + duration * 1000);
+        localStorage.setItem('endTime', newEndTime);
+      }
+
+      // Timer countdown function
+      const interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = hours + ":" + minutes + ":" + seconds;
+        display.textContent = minutes + ":" + seconds;
 
         if (--timer < 0) {
-          timer = 0;
-          Swal.fire({
-            title: 'Voting Ended!',
-            text: 'The voting period has ended.',
-            icon: 'info',
-            confirmButtonText: 'Ok'
-          });
+          clearInterval(interval);
+          localStorage.removeItem('endTime'); // Clear stored endTime after countdown finishes
         }
       }, 1000);
     }
 
+    // Start the timer when the page loads
     window.onload = function () {
-      // Set the countdown for 2 hours (7200 seconds)
-      const countdownTime = 2 * 60 * 60;
-      const display = document.getElementById('countdown');
-      startCountdown(countdownTime, display);
+      const display = document.getElementById('timer');
+      startTimer(countdownDuration, display);
     };
-      </script>
+  </script>
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-database.js"></script>
