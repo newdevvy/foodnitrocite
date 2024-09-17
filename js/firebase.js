@@ -1,14 +1,13 @@
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCgPjkooH46pwvHJ-_exG77Kbah0bMuTao",
-  authDomain: "maidubai-58c03.firebaseapp.com",
-  databaseURL: "https://maidubai-58c03-default-rtdb.firebaseio.com",
-  projectId: "maidubai-58c03",
-  storageBucket: "maidubai-58c03.appspot.com",
-  messagingSenderId: "22954319535",
-  appId: "1:22954319535:web:a39f77fd1c093a5d83be5a",
-  measurementId: "G-TQX1CLW0XE"
-}; 
+  apiKey: "AIzaSyCyOThlxAioJBZnokYbWBoQ1Bs_nDMPonc",
+  authDomain: "foodnitrocite.firebaseapp.com",
+  databaseURL: "https://foodnitrocite-default-rtdb.firebaseio.com",
+  projectId: "foodnitrocite",
+  storageBucket: "foodnitrocite.appspot.com",
+  messagingSenderId: "71299963925",
+  appId: "1:71299963925:web:98c64e5f20840fe6d9021c"
+};
 firebase.initializeApp(firebaseConfig);
 const appCheck = firebase.appCheck();
 console.log(appCheck);
