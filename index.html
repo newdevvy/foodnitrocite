@@ -38,6 +38,13 @@
 
   }
 
+  #countdown {
+    font-size: 2em;
+    color: red;
+    margin-top: 20px;
+    text-align: center;
+  }
+
 .profile-card {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -145,6 +152,8 @@
     <h2 class="profile-name">Team Riyadh</h2>
     <p class="profile-title">tickling your taste bud</p>
     <p class="profile-description">Please we need your vote!</p>
+    
+    <div id="countdown">00:00:00</div>
  <div class="social-links">
 
     <div class="social-vote-button">
@@ -311,6 +320,42 @@
           document.getElementById("facebook").style.display = "none";
       }
     </script>
+
+      <script>
+    // Countdown Timer Script
+    function startCountdown(duration, display) {
+      let timer = duration, hours, minutes, seconds;
+      setInterval(function () {
+        hours = Math.floor((timer / 3600) % 24);
+        minutes = Math.floor((timer % 3600) / 60);
+        seconds = Math.floor(timer % 60);
+
+        // Pad the values to always show two digits
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = hours + ":" + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          timer = 0;
+          Swal.fire({
+            title: 'Voting Ended!',
+            text: 'The voting period has ended.',
+            icon: 'info',
+            confirmButtonText: 'Ok'
+          });
+        }
+      }, 1000);
+    }
+
+    window.onload = function () {
+      // Set the countdown for 2 hours (7200 seconds)
+      const countdownTime = 2 * 60 * 60;
+      const display = document.getElementById('countdown');
+      startCountdown(countdownTime, display);
+    };
+      </script>
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-database.js"></script>
